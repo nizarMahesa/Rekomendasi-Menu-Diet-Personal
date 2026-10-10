@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rekomendasi Menu - DietPlan</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="index.html">🥗 DietPlan</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="bahan.html">Pilih Bahan</a></li>
+        <li class="nav-item"><a class="nav-link active" href="rekomendasi.html">Rekomendasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="ringkasan.html">Ringkasan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5 fade-in">
+  <div class="row">
+    <div class="col-lg-8">
+      <h3>🍽️ Rekomendasi Menu Personal</h3>
+
+      <!-- AI MODE SELECTOR -->
+      <div class="card p-3 mb-3 ai-mode-card">
+        <label class="form-label small fw-bold mb-2">🤖 Metode AI:</label>
+        <div class="btn-group w-100 mb-2" role="group">
+          <input type="radio" class="btn-check" name="aiMode" id="modeCBF" value="cbf" checked>
+          <label class="btn btn-outline-primary btn-sm" for="modeCBF">
+            📐 CBF
+            <br><small style="font-size:10px">Cosine Similarity</small>
+          </label>
+
+          <input type="radio" class="btn-check" name="aiMode" id="modeKNN" value="knn">
+          <label class="btn btn-outline-primary btn-sm" for="modeKNN">
+            👥 KNN
+            <br><small style="font-size:10px">K-Nearest Neighbors</small>
+          </label>
+
+          <input type="radio" class="btn-check" name="aiMode" id="modeHybrid" value="hybrid">
+          <label class="btn btn-outline-primary btn-sm" for="modeHybrid">
+            🧠 Hybrid
+            <br><small style="font-size:10px">CBF + KNN + Rating</small>
+          </label>
+
+          <input type="radio" class="btn-check" name="aiMode" id="modeChat" value="chat">
+          <label class="btn btn-outline-primary btn-sm" for="modeChat">
+            💬 Chatbot
+            <br><small style="font-size:10px">Gemini LLM</small>
+          </label>
+        </div>
+        <div class="small text-muted" id="aiModeInfo">📐 <b>CBF</b>: merekomendasikan menu dengan kemiripan tertinggi terhadap profil & target kalorimu.</div>
+
+        <!-- Bobot Hybrid (muncul kalau mode=hybrid) -->
+        <div id="weightPanel" class="mt-2 p-2" style="display:none;background:#fff;border-radius:6px;border:1px solid rgba(15,23,36,0.06)">
+          <div class="small fw-bold mb-1">⚖️ Bobot Hybrid:</div>
+          <div class="small">📐 CBF: <b id="weightCBF">50</b>% &nbsp;|&nbsp; 👥 KNN: <b id="weightKNN">30</b>% &nbsp;|&nbsp; ⭐ Rating: <b id="weightRating">20</b>%</div>
+          <button class="btn btn-sm btn-outline-secondary mt-1" onclick="retune()" style="font-size:11px">🔄 Auto-Tune Bobot</button>
+        </div>
+      </div>
+
+      <div id="infoRek" class="mb-2"></div>
+      <div id="alergiBadge"></div>
+      <div id="rekomendasiNotice"></div>
+      <div id="hasilRek" class="mt-3"></div>
+
+      <!-- CHATBOT PANEL -->
+      <div id="chatPanel" class="card p-3 mt-3" style="display:none">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="mb-0">💬 Tanya AI tentang Menu</h6>
+          <button class="btn btn-sm btn-outline-secondary" onclick="toggleApiKeySection()" title="Set API Key">⚙️</button>
+        </div>
+
+        <div id="apiKeySection" style="display:none" class="mb-2">
+          <div class="alert alert-info small py-3">
+            <b>🔑 Cara set API Key (sekali saja):</b>
+            <ol class="mb-0 mt-2" style="padding-left:20px">
+              <li>Buka <a href="https://aistudio.google.com/app/apikey" target="_blank" class="fw-bold">Google AI Studio</a></li>
+              <li>Login pakai akun Google (Gmail biasa)</li>
+              <li>Klik tombol <b>"Create API key"</b></li>
+              <li>Copy API key yang muncul</li>
+              <li>Paste di kolom bawah, lalu klik <b>Simpan</b></li>
+            </ol>
+          </div>
+          <div class="input-group input-group-sm">
+            <input type="text" id="apiKeyInput" class="form-control" placeholder="Paste API key Gemini di sini...">
+            <button class="btn btn-primary" onclick="saveApiKey()">Simpan</button>
+          </div>
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+          <div class="chat-msg chat-bot">
+            <div class="chat-bubble chat-bubble-bot">
+              Halo <b id="chatUserName">User</b>! 👋 Aku bisa bantu kamu pilih menu sesuai bahan yang ada di dapurmu.<br><br>
+              Coba tanya:<br>
+              • "Menu apa yang cocok untuk makan malam?"<br>
+              • "Aku punya ayam & brokoli, enaknya apa?"<br>
+              • "Kenapa kamu rekomendasikan menu itu?"
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mt-2">
+          <textarea id="chatInput" class="form-control" rows="1" placeholder="Tanya apa saja tentang menu diet..."></textarea>
+          <button class="btn btn-primary" onclick="sendChatMessage()">Kirim</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card p-3 sticky-top" style="top:90px">
+        <h6>🔎 Filter</h6>
+        <input id="filterSearch" class="form-control form-control-sm mb-2" placeholder="Cari menu...">
+        <select id="filterKategori" class="form-select form-select-sm mb-2">
+          <option value="">Semua Kategori</option>
+          <option value="sarapan">Sarapan</option>
+          <option value="makan_siang">Makan Siang</option>
+          <option value="makan_malam">Makan Malam</option>
+          <option value="snack">Snack</option>
+        </select>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="filterVeg">
+          <label class="form-check-label small" for="filterVeg">🌱 Vegetarian saja</label>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6"><input id="minKal" type="number" class="form-control form-control-sm" placeholder="Min kkal"></div>
+          <div class="col-6"><input id="maxKal" type="number" class="form-control form-control-sm" placeholder="Max kkal"></div>
+        </div>
+        <select id="sortBy" class="form-select form-select-sm mb-2">
+          <option value="skor">Urut: Skor AI</option>
+          <option value="kalori">Urut: Kalori</option>
+          <option value="protein">Urut: Protein</option>
+        </select>
+        <div class="d-grid gap-2">
+          <button class="btn btn-sm btn-primary" onclick="applyFilterAction()">Terapkan</button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="clearFilterAction()">Reset</button>
+        </div>
+        <hr>
+        <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="openPlanModal()">📋 Rencana Makanan</button>
+        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="randomMenu()">🎲 Menu Random</button>
+        <button class="btn btn-sm btn-outline-info w-100 mb-2" onclick="openCompareModal()">⚖️ Bandingkan</button>
+        <button class="btn btn-sm btn-outline-warning w-100" onclick="addProteinCommon()">🥩 Tambah Protein</button>
+        <hr>
+        <h6 class="small">📖 Panduan Bahan</h6>
+        <div id="guidePreview" class="small text-muted"></div>
+        <button class="btn btn-sm btn-outline-secondary w-100 mt-2" onclick="addAvailableFromGuide()">Tambahkan dari Panduan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Rencana -->
+<div class="modal fade" id="planModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">📋 Rencana Makanan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="planList"></div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-outline-danger" onclick="clearAllPlan()">Hapus Semua</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="exportPlanJSON()">Export JSON</button>
+        <button class="btn btn-sm btn-primary" onclick="printPlan()">🖨️ Cetak</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Bandingkan -->
+<div class="modal fade" id="compareModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">⚖️ Bandingkan Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row" id="compareArea"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal XAI -->
+<div class="modal fade" id="xaiModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">🧠 Kenapa Menu Ini Direkomendasikan?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="xaiContent"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
+<script src="ai.js"></script>
+<script src="chatbot.js"></script>
+<script src="rekomendasi.js"></script>
+</body>
+</html>

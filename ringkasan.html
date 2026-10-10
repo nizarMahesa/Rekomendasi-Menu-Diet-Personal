@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ringkasan Gizi - DietPlan</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="index.html">🥗 DietPlan</a>
+    <div class="navbar-nav ms-auto flex-row gap-3">
+      <a class="nav-link" href="bahan.html">Bahan</a>
+      <a class="nav-link" href="rekomendasi.html">Rekomendasi</a>
+      <a class="nav-link active" href="ringkasan.html">Ringkasan</a>
+      <a class="nav-link" href="#" onclick="logout()">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5 fade-in">
+  <div class="card p-4">
+    <h3>📊 Ringkasan Gizi Harian</h3>
+    <p class="text-muted">Berdasarkan menu yang tersimpan di Rencana Makanan.</p>
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="macroChart" style="max-height:300px"></canvas>
+      </div>
+      <div class="col-md-6">
+        <h5 class="mt-3">Total Gizi</h5>
+        <ul class="list-group" id="totalGizi"></ul>
+        <div class="alert alert-info mt-3 small" id="insightBox"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script>
+var user = JSON.parse(localStorage.getItem('user'));
+if(!user) window.location.href = 'index.html';
+
+var plan = JSON.parse(localStorage.getItem('mealPlan')) || [];
+var totalKalori = 0, totalProtein = 0, totalKarbo = 0, totalLemak = 0;
+
+plan.forEach(function(p){
+  var m = MENU.find(function(x){ return x.id === p.id; });
+  if(m){
+    totalKalori += m.kalori;
+    totalProtein += m.protein;
+    totalKarbo += m.karbo;
+    totalLemak += m.lemak;
+  }
+});
+
+document.getElementById('totalGizi').innerHTML =
+  '<li class="list-group-item d-flex justify-content-between"><span>Total Menu</span><b>' + plan.length + ' item</b></li>' +
+  '<li class="list-group-item d-flex justify-content-between"><span>Total Kalori</span><b>' + totalKalori + ' kkal</b></li>' +
+  '<li class="list-group-item d-flex justify-content-between"><span>Protein</span><b>' + totalProtein.toFixed(1) + ' g</b></li>' +
+  '<li class="list-group-item d-flex justify-content-between"><span>Karbohidrat</span><b>' + totalKarbo.toFixed(1) + ' g</b></li>' +
+  '<li class="list-group-item d-flex justify-content-between"><span>Lemak</span><b>' + totalLemak.toFixed(1) + ' g</b></li>';
+
+var insight = document.getElementById('insightBox');
+if(plan.length === 0){
+  insight.innerHTML = '📭 Belum ada menu tersimpan. Buka <a href="rekomendasi.html">Rekomendasi</a> dan klik Simpan.';
+} else {
+  var diff = totalKalori - user.target;
+  var status = diff > 200 ? '⚠️ Total kalori <b>' + diff + ' kkal lebih tinggi</b> dari target (' + user.target + ' kkal).'
+             : diff < -200 ? '⚠️ Total kalori <b>' + Math.abs(diff) + ' kkal lebih rendah</b> dari target (' + user.target + ' kkal).'
+             : '✅ Total kalori <b>sesuai target</b> (' + user.target + ' kkal).';
+  insight.innerHTML = 'Target harian: <b>' + user.target + ' kkal</b><br>' + status;
+}
+
+if(window.Chart){
+  new Chart(document.getElementById('macroChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Protein', 'Karbo', 'Lemak'],
+      datasets: [{
+        data: [totalProtein * 4, totalKarbo * 4, totalLemak * 9],
+        backgroundColor: ['#4da6ff', '#ffd66b', '#ff9a9a']
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
+  });
+}
+</script>
+</body>
+</html>

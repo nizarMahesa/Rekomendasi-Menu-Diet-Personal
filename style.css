@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root{
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --muted: #6b7280;
+  --primary: #0d6efd;
+  --primary-600: #0b5ed7;
+  --radius: 10px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family: 'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: #0f1724;
+  padding-top:72px;
+}
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+html.dark-mode body{background:#0f1724;color:#e8eef7}
+html.dark-mode .card, html.dark-mode .navbar{background:#1a2332;color:#e8eef7;border-color:#2a3a4f}
+html.dark-mode .text-muted{color:#9aa7b8 !important}
+html.dark-mode .form-control, html.dark-mode .form-select{background:#0f1724;color:#e8eef7;border-color:#2a3a4f}
+html.dark-mode .list-group-item{background:#1a2332;color:#e8eef7;border-color:#2a3a4f}
+html.dark-mode .hero{background:#1a2332}
+html.dark-mode .hero .display-5{color:#e8eef7}
+html.dark-mode .badge-kalori{background:#0f1724;color:#e8eef7;border-color:#2a3a4f}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+.navbar{background:#fff;box-shadow:0 6px 18px rgba(15,23,36,0.06)}
+.navbar .navbar-brand{font-weight:700}
+.navbar .nav-link{color:var(--muted);margin-left:8px}
+.navbar .nav-link.active, .navbar .nav-link:hover{color:var(--primary)}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero{background:var(--surface);border-radius:var(--radius);padding:28px;margin:12px 0}
+.hero .display-5{font-weight:700;color:#071330;margin-bottom:8px}
+.hero .lead{color:var(--muted);margin-bottom:16px}
+
+/* ============================================
+   CARD
+   ============================================ */
+.card{background:var(--surface);border-radius:calc(var(--radius) - 2px);box-shadow:0 8px 24px rgba(15,23,36,0.04);border:1px solid rgba(15,23,36,0.04)}
+.card.p-4{padding:20px}
+
+/* ============================================
+   FORM
+   ============================================ */
+.form-label{color:#233;font-weight:600}
+.form-control, .form-select{border-radius:8px;border:1px solid rgba(15,23,36,0.08);padding:.6rem .8rem}
+.form-control:focus, .form-select:focus{box-shadow:0 10px 30px rgba(13,110,253,0.06);border-color:var(--primary)}
+.form-control.is-invalid{border-color:#dc3545}
+.invalid-feedback{color:#dc3545}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn{border-radius:8px;padding:.55rem .85rem;transition:all .2s ease}
+.btn-primary, .btn-success{background:var(--primary);border:none;color:#fff}
+.btn-primary:hover, .btn-success:hover{background:var(--primary-600);transform:translateY(-2px);box-shadow:0 8px 22px rgba(13,110,253,0.15)}
+
+/* ============================================
+   BADGE KALORI
+   ============================================ */
+.badge-kalori{background:#fff;border:1px solid rgba(15,23,36,0.06);color:#0f1724;padding:6px 10px;border-radius:999px;font-weight:600}
+
+/* ============================================
+   MENU CARD
+   ============================================ */
+.menu-card{display:flex;flex-direction:column;gap:8px;padding:16px;position:relative;transition:transform .2s ease, box-shadow .2s ease}
+.menu-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(15,23,36,0.08)}
+.menu-card h5{margin:0;font-size:1.05rem}
+.menu-card .skor{font-weight:700;color:var(--primary)}
+
+.menu-thumb-wrap{
+  width:96px;height:72px;
+  background-size:cover;background-position:center;
+  border-radius:8px;flex:0 0 96px;
+  box-shadow:0 6px 18px rgba(2,6,23,0.06);
+  border:1px solid rgba(15,23,36,0.03);
+  background-color:#e8eef7;
+}
+
+/* ============================================
+   SKOR PROGRESS
+   ============================================ */
+.skor-progress{height:4px;background:rgba(13,110,253,0.1);border-radius:4px;margin:6px 0 10px;overflow:hidden}
+.skor-bar{height:100%;background:linear-gradient(90deg,#0d6efd,#4da6ff);transition:width .8s cubic-bezier(.2,.7,.3,1);border-radius:4px}
+
+/* ============================================
+   SAVE BUTTON
+   ============================================ */
+.save-btn{background:#ffd966;color:#08121a;border-radius:8px;padding:.45rem .7rem;font-weight:700;border:1px solid rgba(0,0,0,0.04)}
+.save-btn:hover{transform:translateY(-2px)}
+
+/* ============================================
+   CONFETTI
+   ============================================ */
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;opacity:0.95;pointer-events:none;z-index:9999;will-change:transform,opacity}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+.fade-in{animation:fadeIn .5s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.menu-card{animation:cardIn .4s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer.site-footer{padding:18px 0;color:var(--muted);text-align:center}
+
+/* ============================================
+   PLAN ITEM
+   ============================================ */
+.plan-thumb{width:64px;height:48px;object-fit:cover;border-radius:6px;border:1px solid rgba(15,23,36,0.04);margin-right:12px}
+.plan-item{display:flex;align-items:center;gap:12px;padding:.6rem .5rem;border-bottom:1px solid rgba(15,23,36,0.05)}
+.plan-item:last-child{border-bottom:none}
+.plan-item .meta{flex:1}
+.plan-item .meta b{display:block}
+
+/* ============================================
+   STICKY
+   ============================================ */
+.sticky-top{position:sticky}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width:992px){
+  .hero{padding:20px}
+  .col-lg-4{order:2}
+  .col-lg-8{order:1}
+  .sticky-top{position:static;top:auto}
+}
+@media (max-width:576px){
+  body{padding-top:76px}
+  .hero{padding:16px}
+  .hero .display-5{font-size:1.4rem}
+  .lead{font-size:.95rem}
+  .menu-card{padding:12px}
+  .menu-thumb-wrap{width:72px;height:54px;flex:0 0 72px}
+  .plan-thumb{width:56px;height:42px}
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+@media print{
+  body{background:#fff;color:#000}
+  nav, .btn, .btn-close, .navbar, .list-group-item, .sticky-top, .modal-footer{display:none !important}
+  .container{width:100%;max-width:none;padding:0}
+  .card{box-shadow:none;border:none}
+}
+
+/* ============================================
+   AI MODE PANEL
+   ============================================ */
+.ai-mode-card {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f0ff 100%);
+  border: 1px solid rgba(13, 110, 253, 0.15);
+}
+html.dark-mode .ai-mode-card {
+  background: linear-gradient(135deg, #1a2332 0%, #1e2a3f 100%);
+}
+.btn-check:checked + .btn-outline-primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.25);
+}
+
+/* ============================================
+   STAR RATING
+   ============================================ */
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+  cursor: pointer;
+}
+.star {
+  font-size: 18px;
+  color: #d1d5db;
+  transition: transform 0.15s ease, color 0.15s ease;
+  user-select: none;
+}
+.star-filled {
+  color: #fbbf24;
+}
+.star-hover {
+  color: #f59e0b;
+  transform: scale(1.15);
+}
+.star:hover {
+  transform: scale(1.2);
+}
+
+/* ============================================
+   XAI (Explainable AI) MODAL
+   ============================================ */
+.xai-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.xai-reason {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border-left: 4px solid;
+}
+.xai-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.xai-high {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+.xai-medium {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #78350f;
+}
+.xai-low {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #7f1d1d;
+}
+html.dark-mode .xai-high { background: #064e3b; color: #a7f3d0; }
+html.dark-mode .xai-medium { background: #422006; color: #fcd34d; }
+html.dark-mode .xai-low { background: #450a0a; color: #fca5a5; }
+
+/* ============================================
+   CHATBOT
+   ============================================ */
+.chat-messages {
+  max-height: 400px;
+  min-height: 250px;
+  overflow-y: auto;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 36, 0.06);
+}
+html.dark-mode .chat-messages {
+  background: #0f1724;
+  border-color: #2a3a4f;
+}
+.chat-msg {
+  margin-bottom: 10px;
+  display: flex;
+}
+.chat-user { justify-content: flex-end; }
+.chat-bot, .chat-system { justify-content: flex-start; }
+.chat-bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+.chat-bubble-user {
+  background: var(--primary);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble-bot {
+  background: #fff;
+  color: #0f1724;
+  border: 1px solid rgba(15, 23, 36, 0.08);
+  border-bottom-left-radius: 4px;
+}
+html.dark-mode .chat-bubble-bot {
+  background: #1a2332;
+  color: #e8eef7;
+  border-color: #2a3a4f;
+}
+.chat-bubble-system {
+  background: #fef3c7;
+  color: #78350f;
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: center;
+  max-width: 100%;
+}
+html.dark-mode .chat-bubble-system {
+  background: #422006;
+  color: #fcd34d;
+}
+#chatInput {
+  resize: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
