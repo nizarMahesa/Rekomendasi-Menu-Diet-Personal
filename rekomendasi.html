@@ -26,42 +26,38 @@
   </div>
 </nav>
 
-<div class="container mt-5 mb-5 fade-in">
+<!-- MULTIMEDIA: BANNER GAMBAR -->
+<div class="container mt-5">
+  <div class="banner-img" style="background-image:url('https://images.unsplash.com/photo-1467453678174-768ec283a940?w=1200&auto=format&fit=crop&q=60');">
+    <div class="banner-overlay">
+      <h2>🍽️ Rekomendasi Menu Personal</h2>
+      <p>Menu dipilih khusus untukmu oleh sistem AI.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 mb-5 fade-in">
   <div class="row">
     <div class="col-lg-8">
       <h3>🍽️ Rekomendasi Menu Personal</h3>
 
-      <!-- AI MODE SELECTOR -->
       <div class="card p-3 mb-3 ai-mode-card">
         <label class="form-label small fw-bold mb-2">🤖 Metode AI:</label>
         <div class="btn-group w-100 mb-2" role="group">
           <input type="radio" class="btn-check" name="aiMode" id="modeCBF" value="cbf" checked>
-          <label class="btn btn-outline-primary btn-sm" for="modeCBF">
-            📐 CBF
-            <br><small style="font-size:10px">Cosine Similarity</small>
-          </label>
+          <label class="btn btn-outline-primary btn-sm" for="modeCBF">📐 CBF<br><small style="font-size:10px">Cosine Similarity</small></label>
 
           <input type="radio" class="btn-check" name="aiMode" id="modeKNN" value="knn">
-          <label class="btn btn-outline-primary btn-sm" for="modeKNN">
-            👥 KNN
-            <br><small style="font-size:10px">K-Nearest Neighbors</small>
-          </label>
+          <label class="btn btn-outline-primary btn-sm" for="modeKNN">👥 KNN<br><small style="font-size:10px">K-Nearest Neighbors</small></label>
 
           <input type="radio" class="btn-check" name="aiMode" id="modeHybrid" value="hybrid">
-          <label class="btn btn-outline-primary btn-sm" for="modeHybrid">
-            🧠 Hybrid
-            <br><small style="font-size:10px">CBF + KNN + Rating</small>
-          </label>
+          <label class="btn btn-outline-primary btn-sm" for="modeHybrid">🧠 Hybrid<br><small style="font-size:10px">CBF + KNN + Rating</small></label>
 
           <input type="radio" class="btn-check" name="aiMode" id="modeChat" value="chat">
-          <label class="btn btn-outline-primary btn-sm" for="modeChat">
-            💬 Chatbot
-            <br><small style="font-size:10px">Gemini LLM</small>
-          </label>
+          <label class="btn btn-outline-primary btn-sm" for="modeChat">💬 Chatbot<br><small style="font-size:10px">Gemini LLM</small></label>
         </div>
         <div class="small text-muted" id="aiModeInfo">📐 <b>CBF</b>: merekomendasikan menu dengan kemiripan tertinggi terhadap profil & target kalorimu.</div>
 
-        <!-- Bobot Hybrid (muncul kalau mode=hybrid) -->
         <div id="weightPanel" class="mt-2 p-2" style="display:none;background:#fff;border-radius:6px;border:1px solid rgba(15,23,36,0.06)">
           <div class="small fw-bold mb-1">⚖️ Bobot Hybrid:</div>
           <div class="small">📐 CBF: <b id="weightCBF">50</b>% &nbsp;|&nbsp; 👥 KNN: <b id="weightKNN">30</b>% &nbsp;|&nbsp; ⭐ Rating: <b id="weightRating">20</b>%</div>
@@ -74,7 +70,6 @@
       <div id="rekomendasiNotice"></div>
       <div id="hasilRek" class="mt-3"></div>
 
-      <!-- CHATBOT PANEL -->
       <div id="chatPanel" class="card p-3 mt-3" style="display:none">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <h6 class="mb-0">💬 Tanya AI tentang Menu</h6>
@@ -159,7 +154,6 @@
   </div>
 </div>
 
-<!-- Modal Rencana -->
 <div class="modal fade" id="planModal" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -177,7 +171,6 @@
   </div>
 </div>
 
-<!-- Modal Bandingkan -->
 <div class="modal fade" id="compareModal" tabindex="-1">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -192,7 +185,6 @@
   </div>
 </div>
 
-<!-- Modal XAI -->
 <div class="modal fade" id="xaiModal" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
