@@ -3,10 +3,10 @@
 // ============================================
 const BAHAN = [
   // ===== PROTEIN HEWANI =====
-  { id: 1,  nama: "Telur",              kategori: "protein", kalori: 155, protein: 13,   karbo: 1.1, lemak: 11 },
+  { id: 1,  nama: "Telur",               kategori: "protein", kalori: 155, protein: 13,   karbo: 1.1, lemak: 11 },
   { id: 2,  nama: "Ayam Dada",          kategori: "protein", kalori: 165, protein: 31,   karbo: 0,   lemak: 3.6 },
-  { id: 3,  nama: "Tahu",               kategori: "protein", kalori: 76,  protein: 8,    karbo: 1.9, lemak: 4.8 },
-  { id: 4,  nama: "Tempe",              kategori: "protein", kalori: 193, protein: 19,   karbo: 9,   lemak: 11 },
+  { id: 3,  nama: "Tahu",                kategori: "protein", kalori: 76,  protein: 8,    karbo: 1.9, lemak: 4.8 },
+  { id: 4,  nama: "Tempe",               kategori: "protein", kalori: 193, protein: 19,   karbo: 9,   lemak: 11 },
   { id: 5,  nama: "Ikan Salmon",        kategori: "protein", kalori: 208, protein: 20,   karbo: 0,   lemak: 13 },
   { id: 6,  nama: "Daging Sapi",        kategori: "protein", kalori: 250, protein: 26,   karbo: 0,   lemak: 15 },
   { id: 27, nama: "Ikan Kembung",       kategori: "protein", kalori: 103, protein: 22,   karbo: 0,   lemak: 1.5 },
@@ -33,7 +33,7 @@ const BAHAN = [
   // ===== SAYURAN =====
   { id: 13, nama: "Bayam",              kategori: "sayur",   kalori: 23,  protein: 2.9,  karbo: 3.6, lemak: 0.4 },
   { id: 14, nama: "Brokoli",            kategori: "sayur",   kalori: 34,  protein: 2.8,  karbo: 7,   lemak: 0.4 },
-  { id: 15, nama: "Wortel",             kategori: "sayur",   kalori: 41,  protein: 0.9,  karbo: 10,  lemak: 0.2 },
+  { id: 15, nama: "Wortel",              kategori: "sayur",   kalori: 41,  protein: 0.9,  karbo: 10,  lemak: 0.2 },
   { id: 16, nama: "Tomat",              kategori: "sayur",   kalori: 18,  protein: 0.9,  karbo: 3.9, lemak: 0.2 },
   { id: 17, nama: "Kangkung",           kategori: "sayur",   kalori: 19,  protein: 3.4,  karbo: 3.1, lemak: 0.2 },
   { id: 18, nama: "Buncis",             kategori: "sayur",   kalori: 31,  protein: 1.8,  karbo: 7,   lemak: 0.1 },
@@ -63,7 +63,7 @@ const BAHAN = [
 
   // ===== LAINNYA =====
   { id: 23, nama: "Susu Rendah Lemak",  kategori: "lain",    kalori: 42,  protein: 3.4,  karbo: 5,   lemak: 1 },
-  { id: 24, nama: "Minyak Zaitun",      kategori: "lain",    kalori: 884, protein: 0,    karbo: 0,   lemak: 100 },
+  { id: 24, nama: "Minyak Zaitun",     kategori: "lain",    kalori: 884, protein: 0,    karbo: 0,   lemak: 100 },
   { id: 25, nama: "Bawang Merah",       kategori: "lain",    kalori: 40,  protein: 1.1,  karbo: 9,   lemak: 0.1 },
   { id: 26, nama: "Bawang Putih",       kategori: "lain",    kalori: 149, protein: 6.4,  karbo: 33,  lemak: 0.5 },
   { id: 56, nama: "Kecap Manis",        kategori: "lain",    kalori: 46,  protein: 5.7,  karbo: 9,   lemak: 1.3 },
@@ -84,46 +84,316 @@ const BAHAN = [
 ];
 
 // ============================================
-// DATA MENU (dari Kaggle: Personalized Daily Meal + Indonesian Recipes)
+// DATA MENU (SEMUA FOTO SUDAH TERISI LINK)
 // ============================================
 const MENU = [
   // ===== SARAPAN =====
-  { id: 1, nama: "Omelet Sayur + Roti Gandum", deskripsi: "Sarapan tinggi protein dan serat", kalori: 380, protein: 20, karbo: 40, lemak: 12, kategori: "sarapan", vegetarian: true, waktu: 10, caraMasak: "1. Kocok telur\n2. Tambah tomat & wortel cincang\n3. Dadar hingga matang\n4. Sajikan dengan roti gandum.", bahan: [1, 16, 15, 10] },
-  { id: 2, nama: "Smoothie Pisang Oat", deskripsi: "Snack sehat tinggi serat", kalori: 250, protein: 8, karbo: 45, lemak: 5, kategori: "snack", vegetarian: true, waktu: 5, caraMasak: "1. Blender pisang + oat + susu\n2. Tambah es batu\n3. Sajikan dingin.", bahan: [19, 9, 23] },
-  { id: 3, nama: "Salad Alpukat Telur", deskripsi: "Salad segar tinggi lemak sehat", kalori: 320, protein: 15, karbo: 15, lemak: 22, kategori: "sarapan", vegetarian: true, waktu: 10, caraMasak: "1. Potong alpukat & telur rebus\n2. Tambah tomat\n3. Beri minyak zaitun & garam.", bahan: [21, 1, 16, 24] },
-  { id: 4, nama: "Oatmeal Pisang Alpukat", deskripsi: "Sarapan energi tinggi", kalori: 400, protein: 12, karbo: 55, lemak: 15, kategori: "sarapan", vegetarian: true, waktu: 7, caraMasak: "1. Seduh oat dengan susu panas\n2. Tambah irisan pisang & alpukat\n3. Sajikan.", bahan: [9, 19, 21] },
-  { id: 5, nama: "Smoothie Bowl Buah Naga", deskripsi: "Sarapan segar kaya antioksidan", kalori: 270, protein: 8, karbo: 48, lemak: 6, kategori: "sarapan", vegetarian: true, waktu: 8, caraMasak: "1. Blender buah naga + yogurt\n2. Tuang ke mangkuk\n3. Taburi granola & chia seed.", bahan: [54, 31, 64, 63] },
-  { id: 6, nama: "Roti Gandum Selai Kacang + Pisang", deskripsi: "Sarapan praktis tinggi energi", kalori: 420, protein: 14, karbo: 50, lemak: 18, kategori: "sarapan", vegetarian: true, waktu: 5, caraMasak: "1. Panggang roti gandum\n2. Olesi selai kacang\n3. Tambah irisan pisang\n4. Sajikan.", bahan: [10, 59, 19] },
-  { id: 7, nama: "Yogurt Buah + Granola", deskripsi: "Sarapan ringan kaya probiotik", kalori: 310, protein: 12, karbo: 42, lemak: 10, kategori: "sarapan", vegetarian: true, waktu: 5, caraMasak: "1. Tuang yogurt ke mangkuk\n2. Tambah potongan buah\n3. Taburi granola.", bahan: [31, 48, 64, 53] },
+  { 
+    id: 1, 
+    nama: "Omelet Sayur + Roti Gandum", 
+    deskripsi: "Sarapan tinggi protein dan serat", 
+    kalori: 380, protein: 20, karbo: 40, lemak: 12, 
+    kategori: "sarapan", vegetarian: true, waktu: 10, 
+    foto: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=300&auto=format&fit=crop&q=80",
+    caraMasak: "1. Kocok telur\n2. Tambah tomat & wortel cincang\n3. Dadar hingga matang\n4. Sajikan dengan roti gandum.", 
+    bahan: [1, 16, 15, 10] 
+  },
+  { 
+    id: 2, 
+    nama: "Smoothie Pisang Oat", 
+    deskripsi: "Snack sehat tinggi serat", 
+    kalori: 250, protein: 8, karbo: 45, lemak: 5, 
+    kategori: "snack", vegetarian: true, waktu: 5, 
+    foto: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=300&auto=format&fit=crop&q=80",
+    caraMasak: "1. Blender pisang + oat + susu\n2. Tambah es batu\n3. Sajikan dingin.", 
+    bahan: [19, 9, 23] 
+  },
+  { 
+    id: 3, 
+    nama: "Salad Alpukat Telur", 
+    deskripsi: "Salad segar tinggi lemak sehat", 
+    kalori: 320, protein: 15, karbo: 15, lemak: 22, 
+    kategori: "sarapan", vegetarian: true, waktu: 10, 
+    foto: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&auto=format&fit=crop&q=80",
+    caraMasak: "1. Potong alpukat & telur rebus\n2. Tambah tomat\n3. Beri minyak zaitun & garam.", 
+    bahan: [21, 1, 16, 24] 
+  },
+  { 
+    id: 4, 
+    nama: "Oatmeal Pisang Alpukat", 
+    deskripsi: "Sarapan energi tinggi", 
+    kalori: 400, protein: 12, karbo: 55, lemak: 15, 
+    kategori: "sarapan", vegetarian: true, waktu: 7, 
+    foto: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Seduh oat dengan susu panas\n2. Tambah irisan pisang & alpukat\n3. Sajikan.", 
+    bahan: [9, 19, 21] 
+  },
+  { 
+    id: 5, 
+    nama: "Smoothie Bowl Buah Naga", 
+    deskripsi: "Sarapan segar kaya antioksidan", 
+    kalori: 270, protein: 8, karbo: 48, lemak: 6, 
+    kategori: "sarapan", vegetarian: true, waktu: 8, 
+    foto: "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Blender buah naga + yogurt\n2. Tuang ke mangkuk\n3. Taburi granola & chia seed.", 
+    bahan: [54, 31, 64, 63] 
+  },
+  { 
+    id: 6, 
+    nama: "Roti Gandum Selai Kacang + Pisang", 
+    deskripsi: "Sarapan praktis tinggi energi", 
+    kalori: 420, protein: 14, karbo: 50, lemak: 18, 
+    kategori: "sarapan", vegetarian: true, waktu: 5, 
+    foto: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Panggang roti gandum\n2. Olesi selai kacang\n3. Tambah irisan pisang\n4. Sajikan.", 
+    bahan: [10, 59, 19] 
+  },
+  { 
+    id: 7, 
+    nama: "Yogurt Buah + Granola", 
+    deskripsi: "Sarapan ringan kaya probiotik", 
+    kalori: 310, protein: 12, karbo: 42, lemak: 10, 
+    kategori: "sarapan", vegetarian: true, waktu: 5, 
+    foto: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tuang yogurt ke mangkuk\n2. Tambah potongan buah\n3. Taburi granola.", 
+    bahan: [31, 48, 64, 53] 
+  },
 
   // ===== MAKAN SIANG =====
-  { id: 8, nama: "Tumis Tahu Bayam + Nasi Merah", deskripsi: "Menu seimbang protein nabati dan sayur hijau", kalori: 420, protein: 18, karbo: 55, lemak: 14, kategori: "makan_siang", vegetarian: true, waktu: 15, caraMasak: "1. Tumis bawang hingga harum\n2. Masukkan tahu, aduk rata\n3. Tambah bayam, masak sebentar\n4. Sajikan dengan nasi merah.", bahan: [3, 13, 25, 7] },
-  { id: 9, nama: "Nasi Merah + Tempe Bacem + Kangkung", deskripsi: "Menu tradisional sehat", kalori: 450, protein: 22, karbo: 60, lemak: 12, kategori: "makan_siang", vegetarian: true, waktu: 25, caraMasak: "1. Bacem tempe dengan kecap\n2. Tumis kangkung dengan bawang\n3. Sajikan dengan nasi merah.", bahan: [7, 4, 17, 26] },
-  { id: 10, nama: "Kentang Rebus + Telur + Buncis", deskripsi: "Menu simpel kaya protein", kalori: 340, protein: 18, karbo: 40, lemak: 10, kategori: "makan_siang", vegetarian: true, waktu: 20, caraMasak: "1. Rebus kentang 15 menit\n2. Rebus telur 8 menit\n3. Tumis buncis\n4. Sajikan.", bahan: [11, 1, 18] },
-  { id: 11, nama: "Gado-Gado", deskripsi: "Salad sayur dengan saus kacang, khas Indonesia", kalori: 380, protein: 15, karbo: 42, lemak: 16, kategori: "makan_siang", vegetarian: true, waktu: 20, caraMasak: "1. Rebus semua sayur\n2. Haluskan kacang tanah + bawang\n3. Campur sayur dengan saus kacang\n4. Tambah lontong.", bahan: [33, 3, 4, 17, 47, 38] },
-  { id: 12, nama: "Nasi Ayam Bakar Tempe", deskripsi: "Menu lengkap protein hewani & nabati", kalori: 520, protein: 32, karbo: 58, lemak: 14, kategori: "makan_siang", vegetarian: false, waktu: 30, caraMasak: "1. Marinasi ayam dengan kecap & bawang\n2. Bakar ayam hingga matang\n3. Goreng tempe sebentar\n4. Sajikan dengan nasi.", bahan: [2, 4, 8, 56, 26] },
-  { id: 13, nama: "Tumis Kangkung Tahu + Nasi", deskripsi: "Menu vegetarian rendah kalori", kalori: 320, protein: 14, karbo: 42, lemak: 10, kategori: "makan_siang", vegetarian: true, waktu: 15, caraMasak: "1. Tumis bawang putih\n2. Masukkan tahu, aduk\n3. Tambah kangkung & saus tiram\n4. Sajikan dengan nasi.", bahan: [17, 3, 26, 57, 8] },
-  { id: 14, nama: "Pecel Sayur + Nasi Merah", deskripsi: "Sayuran segar dengan saus kacang", kalori: 360, protein: 12, karbo: 48, lemak: 14, kategori: "makan_siang", vegetarian: true, waktu: 20, caraMasak: "1. Rebus sayuran\n2. Haluskan kacang + cabai + bawang\n3. Siram sayur dengan saus\n4. Sajikan dengan nasi merah.", bahan: [33, 13, 47, 18, 7] },
-  { id: 15, nama: "Nasi + Ikan Kembung Goreng + Lalapan", deskripsi: "Menu tinggi omega-3", kalori: 480, protein: 28, karbo: 52, lemak: 18, kategori: "makan_siang", vegetarian: false, waktu: 20, caraMasak: "1. Lumuri ikan dengan bumbu\n2. Goreng hingga matang\n3. Siapkan lalapan timun & kemangi\n4. Sajikan dengan nasi.", bahan: [27, 8, 42, 46, 67] },
+  { 
+    id: 8, 
+    nama: "Tumis Tahu Bayam + Nasi Merah", 
+    deskripsi: "Menu seimbang protein nabati dan sayur hijau", 
+    kalori: 420, protein: 18, karbo: 55, lemak: 14, 
+    kategori: "makan_siang", vegetarian: true, waktu: 15, 
+    foto: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tumis bawang hingga harum\n2. Masukkan tahu, aduk rata\n3. Tambah bayam, masak sebentar\n4. Sajikan dengan nasi merah.", 
+    bahan: [3, 13, 25, 7] 
+  },
+  { 
+    id: 9, 
+    nama: "Nasi Merah + Tempe Bacem + Kangkung", 
+    deskripsi: "Menu tradisional sehat", 
+    kalori: 450, protein: 22, karbo: 60, lemak: 12, 
+    kategori: "makan_siang", vegetarian: true, waktu: 25, 
+    foto: "https://media.istockphoto.com/id/1453228857/id/foto/nasi-merah-dengan-sayuran-dan-tempe-di-atas-piring-makanan-sehat.jpg?s=612x612&w=0&k=20&c=gnTzsE0gOpJKKaFiE6Mm2vx_xnfymdmbuOwfmYKxzpU=", 
+    caraMasak: "1. Bacem tempe dengan kecap\n2. Tumis kangkung dengan bawang\n3. Sajikan dengan nasi merah.", 
+    bahan: [7, 4, 17, 26] 
+  },
+  { 
+    id: 10, 
+    nama: "Kentang Rebus + Telur + Buncis", 
+    deskripsi: "Menu simpel kaya protein", 
+    kalori: 340, protein: 18, karbo: 40, lemak: 10, 
+    kategori: "makan_siang", vegetarian: true, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus kentang 15 menit\n2. Rebus telur 8 menit\n3. Tumis buncis\n4. Sajikan.", 
+    bahan: [11, 1, 18] 
+  },
+  { 
+    id: 11, 
+    nama: "Gado-Gado", 
+    deskripsi: "Salad sayur dengan saus kacang, khas Indonesia", 
+    kalori: 380, protein: 15, karbo: 42, lemak: 16, 
+    kategori: "makan_siang", vegetarian: true, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus semua sayur\n2. Haluskan kacang tanah + bawang\n3. Campur sayur dengan saus kacang\n4. Tambah lontong.", 
+    bahan: [33, 3, 4, 17, 47, 38] 
+  },
+  { 
+    id: 12, 
+    nama: "Nasi Ayam Bakar Tempe", 
+    deskripsi: "Menu lengkap protein hewani & nabati", 
+    kalori: 520, protein: 32, karbo: 58, lemak: 14, 
+    kategori: "makan_siang", vegetarian: false, waktu: 30, 
+    foto: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Marinasi ayam dengan kecap & bawang\n2. Bakar ayam hingga matang\n3. Goreng tempe sebentar\n4. Sajikan dengan nasi.", 
+    bahan: [2, 4, 8, 56, 26] 
+  },
+  { 
+    id: 13, 
+    nama: "Tumis Kangkung Tahu + Nasi", 
+    deskripsi: "Menu vegetarian rendah kalori", 
+    kalori: 320, protein: 14, karbo: 42, lemak: 10, 
+    kategori: "makan_siang", vegetarian: true, waktu: 15, 
+    foto: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tumis bawang putih\n2. Masukkan tahu, aduk\n3. Tambah kangkung & saus tiram\n4. Sajikan dengan nasi.", 
+    bahan: [17, 3, 26, 57, 8] 
+  },
+  { 
+    id: 14, 
+    nama: "Pecel Sayur + Nasi Merah", 
+    deskripsi: "Sayuran segar dengan saus kacang", 
+    kalori: 360, protein: 12, karbo: 48, lemak: 14, 
+    kategori: "makan_siang", vegetarian: true, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus sayuran\n2. Haluskan kacang + cabai + bawang\n3. Siram sayur dengan saus\n4. Sajikan dengan nasi merah.", 
+    bahan: [33, 13, 47, 18, 7] 
+  },
+  { 
+    id: 15, 
+    nama: "Nasi + Ikan Kembung Goreng + Lalapan", 
+    deskripsi: "Menu tinggi omega-3", 
+    kalori: 480, protein: 28, karbo: 52, lemak: 18, 
+    kategori: "makan_siang", vegetarian: false, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Lumuri ikan dengan bumbu\n2. Goreng hingga matang\n3. Siapkan lalapan timun & kemangi\n4. Sajikan dengan nasi.", 
+    bahan: [27, 8, 42, 46, 67] 
+  },
 
   // ===== MAKAN MALAM =====
-  { id: 16, nama: "Sup Ayam Jagung Wortel", deskripsi: "Sup hangat rendah kalori", kalori: 280, protein: 25, karbo: 30, lemak: 6, kategori: "makan_malam", vegetarian: false, waktu: 30, caraMasak: "1. Rebus ayam hingga empuk\n2. Tambah jagung & wortel\n3. Bumbui garam & merica\n4. Sajikan hangat.", bahan: [2, 12, 15, 26] },
-  { id: 17, nama: "Ayam Panggang Brokoli", deskripsi: "Menu tinggi protein rendah karbo", kalori: 380, protein: 40, karbo: 12, lemak: 18, kategori: "makan_malam", vegetarian: false, waktu: 25, caraMasak: "1. Marinasi ayam dengan bawang\n2. Panggang 20 menit\n3. Kukus brokoli\n4. Sajikan.", bahan: [2, 14, 24] },
-  { id: 18, nama: "Sup Ikan Salmon Tomat", deskripsi: "Menu omega-3 untuk kesehatan jantung", kalori: 350, protein: 30, karbo: 12, lemak: 20, kategori: "makan_malam", vegetarian: false, waktu: 20, caraMasak: "1. Tumis tomat & bawang\n2. Tambah air, didihkan\n3. Masukkan salmon\n4. Sajikan hangat.", bahan: [5, 16, 25] },
-  { id: 19, nama: "Soto Ayam Bening", deskripsi: "Sup ayam khas Indonesia, rendah lemak", kalori: 280, protein: 24, karbo: 18, lemak: 10, kategori: "makan_malam", vegetarian: false, waktu: 35, caraMasak: "1. Rebus ayam dengan kunyit & serai\n2. Tambah kol & soun\n3. Bumbui garam\n4. Sajikan dengan bawang goreng.", bahan: [2, 65, 66, 25, 41, 69] },
-  { id: 20, nama: "Pepes Ikan Kembung", deskripsi: "Ikan kukus bumbu kemangi, rendah kalori", kalori: 240, protein: 28, karbo: 6, lemak: 11, kategori: "makan_malam", vegetarian: false, waktu: 25, caraMasak: "1. Lumuri ikan dengan bumbu\n2. Bungkus dengan daun pisang\n3. Kukus 20 menit\n4. Sajikan.", bahan: [27, 46, 16, 67, 68] },
-  { id: 21, nama: "Sup Bening Sayur + Dada Ayam", deskripsi: "Sup rendah lemak tinggi protein", kalori: 210, protein: 26, karbo: 14, lemak: 5, kategori: "makan_malam", vegetarian: false, waktu: 25, caraMasak: "1. Rebus dada ayam\n2. Tambah wortel, buncis, kentang\n3. Bumbui seledri & garam\n4. Sajikan hangat.", bahan: [2, 15, 18, 11, 70] },
-  { id: 22, nama: "Tumis Brokoli Sapi", deskripsi: "Menu tinggi protein & zat besi", kalori: 360, protein: 30, karbo: 15, lemak: 20, kategori: "makan_malam", vegetarian: false, waktu: 20, caraMasak: "1. Tumis bawang & sapi\n2. Tambah brokoli\n3. Bumbui saus tiram\n4. Sajikan.", bahan: [6, 14, 26, 57] },
-  { id: 23, nama: "Capcay Kuah + Nasi Merah", deskripsi: "Menu sayur lengkap dengan kuah", kalori: 340, protein: 16, karbo: 48, lemak: 10, kategori: "makan_malam", vegetarian: true, waktu: 20, caraMasak: "1. Tumis bawang\n2. Masukkan semua sayur\n3. Tambah air & saus tiram\n4. Sajikan dengan nasi merah.", bahan: [15, 14, 41, 43, 57, 7] },
-  { id: 24, nama: "Tumis Udang Brokoli", deskripsi: "Menu laut tinggi protein rendah lemak", kalori: 290, protein: 28, karbo: 12, lemak: 14, kategori: "makan_malam", vegetarian: false, waktu: 15, caraMasak: "1. Tumis bawang putih\n2. Masukkan udang\n3. Tambah brokoli\n4. Bumbui garam & saus tiram.", bahan: [28, 14, 26, 57] },
+  { 
+    id: 16, 
+    nama: "Sup Ayam Jagung Wortel", 
+    deskripsi: "Sup hangat rendah kalori", 
+    kalori: 280, protein: 25, karbo: 30, lemak: 6, 
+    kategori: "makan_malam", vegetarian: false, waktu: 30, 
+    foto: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus ayam hingga empuk\n2. Tambah jagung & wortel\n3. Bumbui garam & merica\n4. Sajikan hangat.", 
+    bahan: [2, 12, 15, 26] 
+  },
+  { 
+    id: 17, 
+    nama: "Ayam Panggang Brokoli", 
+    deskripsi: "Menu tinggi protein rendah karbo", 
+    kalori: 380, protein: 40, karbo: 12, lemak: 18, 
+    kategori: "makan_malam", vegetarian: false, waktu: 25, 
+    foto: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Marinasi ayam dengan bawang\n2. Panggang 20 menit\n3. Kukus brokoli\n4. Sajikan.", 
+    bahan: [2, 14, 24] 
+  },
+  { 
+    id: 18, 
+    nama: "Sup Ikan Salmon Tomat", 
+    deskripsi: "Menu omega-3 untuk kesehatan jantung", 
+    kalori: 350, protein: 30, karbo: 12, lemak: 20, 
+    kategori: "makan_malam", vegetarian: false, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tumis tomat & bawang\n2. Tambah air, didihkan\n3. Masukkan salmon\n4. Sajikan hangat.", 
+    bahan: [5, 16, 25] 
+  },
+  { 
+    id: 19, 
+    nama: "Soto Ayam Bening", 
+    deskripsi: "Sup ayam khas Indonesia, rendah lemak", 
+    kalori: 280, protein: 24, karbo: 18, lemak: 10, 
+    kategori: "makan_malam", vegetarian: false, waktu: 35, 
+    foto: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus ayam dengan kunyit & serai\n2. Tambah kol & soun\n3. Bumbui garam\n4. Sajikan dengan bawang goreng.", 
+    bahan: [2, 65, 66, 25, 41, 69] 
+  },
+  { 
+    id: 20, 
+    nama: "Pepes Ikan Kembung", 
+    deskripsi: "Ikan kukus bumbu kemangi, rendah kalori", 
+    kalori: 240, protein: 28, karbo: 6, lemak: 11, 
+    kategori: "makan_malam", vegetarian: false, waktu: 25, 
+    foto: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Lumuri ikan dengan bumbu\n2. Bungkus dengan daun pisang\n3. Kukus 20 menit\n4. Sajikan.", 
+    bahan: [27, 46, 16, 67, 68] 
+  },
+  { 
+    id: 21, 
+    nama: "Sup Bening Sayur + Dada Ayam", 
+    deskripsi: "Sup rendah lemak tinggi protein", 
+    kalori: 210, protein: 26, karbo: 14, lemak: 5, 
+    kategori: "makan_malam", vegetarian: false, waktu: 25, 
+    foto: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus dada ayam\n2. Tambah wortel, buncis, kentang\n3. Bumbui seledri & garam\n4. Sajikan hangat.", 
+    bahan: [2, 15, 18, 11, 70] 
+  },
+  { 
+    id: 22, 
+    nama: "Tumis Brokoli Sapi", 
+    deskripsi: "Menu tinggi protein & zat besi", 
+    kalori: 360, protein: 30, karbo: 15, lemak: 20, 
+    kategori: "makan_malam", vegetarian: false, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tumis bawang & sapi\n2. Tambah brokoli\n3. Bumbui saus tiram\n4. Sajikan.", 
+    bahan: [6, 14, 26, 57] 
+  },
+  { 
+    id: 23, 
+    nama: "Capcay Kuah + Nasi Merah", 
+    deskripsi: "Menu sayur lengkap dengan kuah", 
+    kalori: 340, protein: 16, karbo: 48, lemak: 10, 
+    kategori: "makan_malam", vegetarian: true, waktu: 20, 
+    foto: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tumis bawang\n2. Masukkan semua sayur\n3. Tambah air & saus tiram\n4. Sajikan dengan nasi merah.", 
+    bahan: [15, 14, 41, 43, 57, 7] 
+  },
+  { 
+    id: 24, 
+    nama: "Tumis Udang Brokoli", 
+    deskripsi: "Menu laut tinggi protein rendah lemak", 
+    kalori: 290, protein: 28, karbo: 12, lemak: 14, 
+    kategori: "makan_malam", vegetarian: false, waktu: 15, 
+    foto: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tumis bawang putih\n2. Masukkan udang\n3. Tambah brokoli\n4. Bumbui garam & saus tiram.", 
+    bahan: [28, 14, 26, 57] 
+  },
 
   // ===== SNACK =====
-  { id: 25, nama: "Salad Buah Yogurt", deskripsi: "Snack segar rendah kalori", kalori: 180, protein: 6, karbo: 30, lemak: 4, kategori: "snack", vegetarian: true, waktu: 5, caraMasak: "1. Potong semua buah\n2. Campur dalam mangkuk\n3. Siram dengan yogurt.", bahan: [20, 22, 48, 31] },
-  { id: 26, nama: "Almond + Cokelat Hitam", deskripsi: "Snack tinggi lemak sehat", kalori: 220, protein: 6, karbo: 15, lemak: 16, kategori: "snack", vegetarian: true, waktu: 2, caraMasak: "1. Siapkan almond\n2. Potong cokelat hitam\n3. Sajikan bersama.", bahan: [61, 60] },
-  { id: 27, nama: "Edamame Rebus", deskripsi: "Snack protein nabati", kalori: 150, protein: 12, karbo: 10, lemak: 6, kategori: "snack", vegetarian: true, waktu: 8, caraMasak: "1. Rebus edamame 5 menit\n2. Taburi garam\n3. Sajikan hangat.", bahan: [30] },
-  { id: 28, nama: "Pisang + Selai Kacang", deskripsi: "Snack energi cepat", kalori: 250, protein: 8, karbo: 32, lemak: 12, kategori: "snack", vegetarian: true, waktu: 3, caraMasak: "1. Potong pisang\n2. Olesi selai kacang\n3. Sajikan.", bahan: [19, 59] },
-  { id: 29, nama: "Yogurt Madu + Chia", deskripsi: "Snack probiotik tinggi serat", kalori: 190, protein: 10, karbo: 22, lemak: 8, kategori: "snack", vegetarian: true, waktu: 3, caraMasak: "1. Tuang yogurt\n2. Tambah madu\n3. Taburi chia seed.", bahan: [31, 58, 63] },
-  { id: 30, nama: "Buah Potong Segar", deskripsi: "Snack buah campur", kalori: 120, protein: 2, karbo: 30, lemak: 0.5, kategori: "snack", vegetarian: true, waktu: 5, caraMasak: "1. Potong semua buah\n2. Tata di piring\n3. Sajikan dingin.", bahan: [19, 50, 51, 53] }
+  { 
+    id: 25, 
+    nama: "Salad Buah Yogurt", 
+    deskripsi: "Snack segar rendah kalori", 
+    kalori: 180, protein: 6, karbo: 30, lemak: 4, 
+    kategori: "snack", vegetarian: true, waktu: 5, 
+    foto: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Potong semua buah\n2. Campur dalam mangkuk\n3. Siram dengan yogurt.", 
+    bahan: [20, 22, 48, 31] 
+  },
+  { 
+    id: 26, 
+    nama: "Almond + Cokelat Hitam", 
+    deskripsi: "Snack tinggi lemak sehat", 
+    kalori: 220, protein: 6, karbo: 15, lemak: 16, 
+    kategori: "snack", vegetarian: true, waktu: 2, 
+    foto: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Siapkan almond\n2. Potong cokelat hitam\n3. Sajikan bersama.", 
+    bahan: [61, 60] 
+  },
+  { 
+    id: 27, 
+    nama: "Edamame Rebus", 
+    deskripsi: "Snack protein nabati", 
+    kalori: 150, protein: 12, karbo: 10, lemak: 6, 
+    kategori: "snack", vegetarian: true, waktu: 8, 
+    foto: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Rebus edamame 5 menit\n2. Taburi garam\n3. Sajikan hangat.", 
+    bahan: [30] 
+  },
+  { 
+    id: 28, 
+    nama: "Pisang + Selai Kacang", 
+    deskripsi: "Snack energi cepat", 
+    kalori: 250, protein: 8, karbo: 32, lemak: 12, 
+    kategori: "snack", vegetarian: true, waktu: 3, 
+    foto: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Potong pisang\n2. Olesi selai kacang\n3. Sajikan.", 
+    bahan: [19, 59] 
+  },
+  { 
+    id: 29, 
+    nama: "Yogurt Madu + Chia", 
+    deskripsi: "Snack probiotik tinggi serat", 
+    kalori: 190, protein: 10, karbo: 22, lemak: 8, 
+    kategori: "snack", vegetarian: true, waktu: 3, 
+    foto: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Tuang yogurt\n2. Tambah madu\n3. Taburi chia seed.", 
+    bahan: [31, 58, 63] 
+  },
+  { 
+    id: 30, 
+    nama: "Buah Potong Segar", 
+    deskripsi: "Snack buah campur", 
+    kalori: 120, protein: 2, karbo: 30, lemak: 0.5, 
+    kategori: "snack", vegetarian: true, waktu: 5, 
+    foto: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=300&auto=format&fit=crop&q=80", 
+    caraMasak: "1. Potong semua buah\n2. Tata di piring\n3. Sajikan dingin.", 
+    bahan: [19, 50, 51, 53] 
+  }
 ];
 
 // ============================================
@@ -209,7 +479,7 @@ const SUBSTITUSI = {
 };
 
 // ============================================
-// UTILITY FUNCTIONS
+// UTILITY FUNCTIONS & GENERATE THUMBNAIL
 // ============================================
 window.showToast = function(msg, type, duration){
   type = type || 'info';
@@ -245,7 +515,14 @@ window.showConfetti = function(x, y, count){
   }
 };
 
+// 🖼️ FUNGSI UNTUK MERENDER THUMBNAIL FOTO / FALLBACK SVG
 window.generateMenuThumbnail = function(menu){
+  // 1. Jika menu memiliki foto (tidak kosong), gunakan foto tersebut
+  if (menu && menu.foto && menu.foto.trim() !== "") {
+    return menu.foto;
+  }
+
+  // 2. Fallback: Buat warna SVG default jika tidak ada foto
   var first = menu.bahan && menu.bahan.length ? BAHAN.find(function(b){ return b.id === menu.bahan[0]; }) : null;
   var kat = first ? first.kategori : 'lain';
   var colors = {
