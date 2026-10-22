@@ -1,26 +1,23 @@
 // ============================================
-// CHATBOT MODULE — Gemini API (Fixed Model)
+// CHATBOT MODULE — Gemini API (FIXED ENDPOINT & NO REFRESH)
 // ============================================
-// API key gratis: https://aistudio.google.com/app/apikey
-// Model: gemini-2.5-flash (pengganti resmi gemini-1.5-flash)
 
 var GEMINI_API_KEY = localStorage.getItem('geminiApiKey') || '';
 
-// ============================================
 // API KEY MANAGEMENT
-// ============================================
 function saveApiKey() {
   var input = document.getElementById('apiKeyInput');
   if (!input) return;
   var key = input.value.trim();
   if (!key) {
-    window.showToast('API key tidak boleh kosong.', 'warning', 1400);
+    if (window.showToast) window.showToast('API key tidak boleh kosong.', 'warning', 1400);
     return;
   }
   localStorage.setItem('geminiApiKey', key);
   GEMINI_API_KEY = key;
-  window.showToast('✅ API key tersimpan', 'success', 1400);
-  document.getElementById('apiKeySection').style.display = 'none';
+  if (window.showToast) window.showToast('✅ API key tersimpan', 'success', 1400);
+  var sec = document.getElementById('apiKeySection');
+  if (sec) sec.style.display = 'none';
 }
 window.saveApiKey = saveApiKey;
 
@@ -30,25 +27,23 @@ function toggleApiKeySection() {
 }
 window.toggleApiKeySection = toggleApiKeySection;
 
-// ============================================
 // BUILD CONTEXT
-// ============================================
 function buildUserContext() {
   var user = JSON.parse(localStorage.getItem('user')) || {};
   var bahanUser = JSON.parse(localStorage.getItem('bahanUser')) || [];
   var plan = JSON.parse(localStorage.getItem('mealPlan')) || [];
 
   var bahanNama = bahanUser.map(function(id) {
-    var b = BAHAN.find(function(x) { return x.id === id; });
+    var b = (typeof BAHAN !== 'undefined') ? BAHAN.find(function(x) { return x.id === id; }) : null;
     return b ? b.nama : '';
   }).filter(Boolean);
 
-  var menuList = MENU.map(function(m) {
+  var menuList = (typeof MENU !== 'undefined') ? MENU.map(function(m) {
     return 'ID ' + m.id + ': ' + m.nama + ' (' + m.kalori + ' kkal, P:' + m.protein + 'g, K:' + m.karbo + 'g, L:' + m.lemak + 'g)';
-  }).join('\n');
+  }).join('\n') : '';
 
   var savedMenu = plan.map(function(p) {
-    var m = MENU.find(function(x) { return x.id === p.id; });
+    var m = (typeof MENU !== 'undefined') ? MENU.find(function(x) { return x.id === p.id; });
     return m ? m.nama : '';
   }).filter(Boolean);
 
@@ -83,9 +78,7 @@ function buildSystemPrompt(context) {
     '7. Jangan pernah merekomendasikan menu yang mengandung alergi user.';
 }
 
-// ============================================
-// SEND TO GEMINI — MODEL SUDAH DIPERBAIKI
-// ============================================
+// SEND TO GEMINI (Endpoint Resmi Gemini 1.5 Flash)
 async function sendToGemini(userMessage) {
   if (!GEMINI_API_KEY) {
     throw new Error('API key belum diset. Klik ⚙️ untuk memasukkan API key.');
@@ -94,8 +87,7 @@ async function sendToGemini(userMessage) {
   var context = buildUserContext();
   var systemPrompt = buildSystemPrompt(context);
 
-  // ⚠️ MODEL BARU: gemini-2.5-flash (pengganti gemini-1.5-flash yang sudah dihentikan)
-var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=' + GEMINI_API_KEY;
+  var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_API_KEY;
 
   var body = {
     contents: [
@@ -132,9 +124,7 @@ var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-fl
   return data.candidates[0].content.parts[0].text;
 }
 
-// ============================================
 // UI CHATBOT
-// ============================================
 function appendChatMessage(role, text) {
   var box = document.getElementById('chatMessages');
   if (!box) return;
@@ -185,29 +175,40 @@ async function sendChatMessage() {
 
   appendChatMessage('system', '⏳ AI sedang mengetik...');
   var box = document.getElementById('chatMessages');
-  var typingMsg = box.lastChild;
+  var typingMsg = box ? box.lastChild : null;
 
   try {
     var reply = await sendToGemini(msg);
-    box.removeChild(typingMsg);
+    if (typingMsg && typingMsg.parentNode) {
+      box.removeChild(typingMsg);
+    }
     appendChatMessage('bot', reply);
   } catch (err) {
-    box.removeChild(typingMsg);
+    if (typingMsg && typingMsg.parentNode) {
+      box.removeChild(typingMsg);
+    }
     appendChatMessage('system', '❌ ' + err.message);
     console.error(err);
   }
 }
 window.sendChatMessage = sendChatMessage;
 
-// ============================================
-// INIT
-// ============================================
+// INIT (MENANGANI FORM SUBMIT / PREVENT REFRESH)
 document.addEventListener('DOMContentLoaded', function() {
   var input = document.getElementById('chatInput');
+  var form = document.getElementById('chatForm') || (input ? input.closest('form') : null);
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Mencegah web ke-refresh
+      sendChatMessage();
+    });
+  }
+
   if (input) {
     input.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
+        e.preventDefault(); // Mencegah enter bikin reload
         sendChatMessage();
       }
     });
@@ -222,4 +223,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-console.log('💬 Chatbot Module loaded (model: gemini-2.5-flash)');
+console.log('💬 Chatbot Module Loaded (Model: gemini-1.5-flash)');
