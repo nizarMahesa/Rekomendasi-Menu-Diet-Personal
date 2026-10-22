@@ -1,8 +1,18 @@
 // ============================================
-// CHATBOT MODULE — Gemini API (FIXED ENDPOINT & NO REFRESH)
+// CHATBOT MODULE — FIX ENTER & TOMBOL KIRIM
 // ============================================
 
 var GEMINI_API_KEY = localStorage.getItem('geminiApiKey') || '';
+
+// Deteksi otomatis elemen HTML agar tidak error null
+function getChatElements() {
+  var input = document.getElementById('chatInput') || document.getElementById('chat-input') || document.getElementById('inputChat');
+  var box = document.getElementById('chatMessages') || document.getElementById('chatBox') || document.getElementById('chat-box');
+  var form = document.getElementById('chatForm') || document.getElementById('chat-form') || (input ? input.closest('form') : null);
+  var btn = document.getElementById('sendBtn') || document.getElementById('send-btn') || document.getElementById('btnSend');
+
+  return { input: input, box: box, form: form, btn: btn };
+}
 
 // API KEY MANAGEMENT
 function saveApiKey() {
@@ -10,12 +20,12 @@ function saveApiKey() {
   if (!input) return;
   var key = input.value.trim();
   if (!key) {
-    if (window.showToast) window.showToast('API key tidak boleh kosong.', 'warning', 1400);
+    alert('API key tidak boleh kosong.');
     return;
   }
   localStorage.setItem('geminiApiKey', key);
   GEMINI_API_KEY = key;
-  if (window.showToast) window.showToast('✅ API key tersimpan', 'success', 1400);
+  alert('✅ API Key berhasil disimpan!');
   var sec = document.getElementById('apiKeySection');
   if (sec) sec.style.display = 'none';
 }
@@ -78,24 +88,21 @@ function buildSystemPrompt(context) {
     '7. Jangan pernah merekomendasikan menu yang mengandung alergi user.';
 }
 
-// SEND TO GEMINI (Endpoint Resmi Gemini 1.5 Flash)
+// KIRIM KE GEMINI API
 async function sendToGemini(userMessage) {
   if (!GEMINI_API_KEY) {
-    throw new Error('API key belum diset. Klik ⚙️ untuk memasukkan API key.');
+    throw new Error('API key belum diset. Klik tombol ⚙️ untuk memasukkan API key.');
   }
 
   var context = buildUserContext();
   var systemPrompt = buildSystemPrompt(context);
-
   var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_API_KEY;
 
   var body = {
     contents: [
       {
         role: 'user',
-        parts: [
-          { text: systemPrompt + '\n\nPERTANYAAN USER: ' + userMessage }
-        ]
+        parts: [{ text: systemPrompt + '\n\nPERTANYAAN USER: ' + userMessage }]
       }
     ],
     generationConfig: {
@@ -112,22 +119,22 @@ async function sendToGemini(userMessage) {
 
   if (!response.ok) {
     var errText = await response.text();
-    throw new Error('Gemini API error: ' + response.status + ' — ' + errText);
+    throw new Error('Gemini API Error (' + response.status + '). Cek kembali API Key kamu.');
   }
 
   var data = await response.json();
 
   if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
-    throw new Error('Response Gemini tidak valid.');
+    throw new Error('Respons Gemini tidak valid.');
   }
 
   return data.candidates[0].content.parts[0].text;
 }
 
-// UI CHATBOT
+// TAMPILKAN DI CHAT BOX
 function appendChatMessage(role, text) {
-  var box = document.getElementById('chatMessages');
-  if (!box) return;
+  var els = getChatElements();
+  if (!els.box) return;
 
   var div = document.createElement('div');
   div.className = 'chat-msg chat-' + role;
@@ -140,41 +147,42 @@ function appendChatMessage(role, text) {
     div.innerHTML = '<div class="chat-bubble chat-bubble-system">' + escapeHtml(text) + '</div>';
   }
 
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
+  els.box.appendChild(div);
+  els.box.scrollTop = els.box.scrollHeight;
 }
 
 function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function formatBotText(text) {
   var esc = escapeHtml(text);
-  esc = esc.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
-  esc = esc.replace(/\n/g, '<br>');
-  return esc;
+  return esc.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
 }
 
+// FUNGSI UTAMA KIRIM PESAN
 async function sendChatMessage() {
-  var input = document.getElementById('chatInput');
-  if (!input) return;
+  var els = getChatElements();
+  if (!els.input) {
+    alert('Input chat tidak ditemukan di HTML! Pastikan elemen input memiliki id="chatInput"');
+    return;
+  }
 
-  var msg = input.value.trim();
+  var msg = els.input.value.trim();
   if (!msg) return;
 
   if (!GEMINI_API_KEY) {
     appendChatMessage('system', '⚠️ API key belum diset. Klik tombol ⚙️ di atas untuk memasukkan API key Gemini.');
+    var sec = document.getElementById('apiKeySection');
+    if (sec) sec.style.display = 'block';
     return;
   }
 
   appendChatMessage('user', msg);
-  input.value = '';
+  els.input.value = '';
 
   appendChatMessage('system', '⏳ AI sedang mengetik...');
-  var box = document.getElementById('chatMessages');
+  var box = els.box;
   var typingMsg = box ? box.lastChild : null;
 
   try {
@@ -193,24 +201,30 @@ async function sendChatMessage() {
 }
 window.sendChatMessage = sendChatMessage;
 
-// INIT (MENANGANI FORM SUBMIT / PREVENT REFRESH)
-document.addEventListener('DOMContentLoaded', function() {
-  var input = document.getElementById('chatInput');
-  var form = document.getElementById('chatForm') || (input ? input.closest('form') : null);
+// INISIALISASI EVENT LISTENER (ENTER & CLICK)
+function initChatEvents() {
+  var els = getChatElements();
 
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Mencegah web ke-refresh
+  if (els.input) {
+    els.input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    });
+  }
+
+  if (els.form) {
+    els.form.addEventListener('submit', function(e) {
+      e.preventDefault();
       sendChatMessage();
     });
   }
 
-  if (input) {
-    input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault(); // Mencegah enter bikin reload
-        sendChatMessage();
-      }
+  if (els.btn) {
+    els.btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      sendChatMessage();
     });
   }
 
@@ -221,6 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var inp = document.getElementById('apiKeyInput');
     if (inp) inp.value = GEMINI_API_KEY;
   }
-});
+}
 
-console.log('💬 Chatbot Module Loaded (Model: gemini-1.5-flash)');
+// Panggil fungsi saat DOM siap
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initChatEvents);
+} else {
+  initChatEvents();
+}
+
+console.log('💬 Chatbot Module Loaded & Event Handlers Active');
